@@ -1,7 +1,7 @@
 {
-  "name": "ollama-desktop",
-  "version": "0.0.3",
-  "description": "Ollama Desktop Client",
+  "name": "GemyAjj",
+  "version": "0.0.4",
+  "description": "Gemy",
   "type": "module",
   "main": "index.js",
   "scripts": {
@@ -11,23 +11,24 @@
   },
   "author": "@danchev",
   "license": "AGPL-3.0",
-  "homepage": "https://github.com/danchev/ollama-desktop",
+  "homepage": "https://github.com/arquxx/GemyAjj",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/danchev/ollama-desktop.git"
+    "url": "git+https://github.com/arquxx/GemyAjj.git"
   },
   "devDependencies": {
     "electron": "^33.2.1",
     "electron-builder": "^25.1.8",
     "electron-winstaller": "^5.4.0",
-    "prettier": "^3.4.2"
+    "prettier": "^3.4.2",
+    "dmg-license": "^1.0.13"
   },
   "dependencies": {
     "electron-store": "^10.0.0"
   },
   "build": {
-    "appId": "net.danchev.ollama-desktop",
-    "productName": "Ollama-Desktop",
+    "appId": "net.danchev.gemyajj",
+    "productName": "GemyAjj",
     "directories": {
       "output": "build"
     },
