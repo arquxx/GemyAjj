@@ -31,3 +31,15 @@ jobs:
 
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: DL Artefact
+        if: always
+        uses: actions/upload-artifact@v4.6.1
+        with:
+          name: build
+          path: builds/
+          if-no-files-found: warn #def warn
+          retention-days: 30
+          compression-level: 6 #def 6
+          overwrite: true
+          include-hidden-files: false
