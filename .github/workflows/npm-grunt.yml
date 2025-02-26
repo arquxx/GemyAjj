@@ -1,4 +1,4 @@
-name: Node.js CI with Grunt
+name: Node.js CI with Grunt (Windows)
 
 on:
   push:
@@ -8,26 +8,45 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     strategy:
       matrix:
         node-version: [18.x, 20.x, 22.x]
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout Repository
+      uses: actions/checkout@v4
 
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Set up Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
+
+    - name: Cache Node.js modules  # Cache step
+      uses: actions/cache@v4
+      with:
+        path: '**/node_modules'  # Cache the node_modules directory
+        key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }} # Cache key
+        restore-keys: |
+          ${{ runner.os }}-node-${{ matrix.node-version }}-
+          ${{ runner.os }}-node-
 
     - name: Install Dependencies
       run: npm install
 
     - name: Run Grunt Build
-      run: npx grunt  # Use npx to run Grunt
+      run: npx grunt
 
-    # Example:  Add a test step (if you have tests)
-    - name: Run Tests (Example)
-      run: npm test  # Replace with your actual test command
+    - name: Run Tests
+      run: npm test
+
+    # --- Optional: Artifact Upload ---
+    # - name: Upload Build Artifact
+    #   uses: actions/upload-artifact@v4.3.1
+    #   with:
+    #     name: build-artifact
+    #     path: dist/
+    #     if-no-files-found: warn
+    #     retention-days: 30
+    #     compression-level: 6
