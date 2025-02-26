@@ -3,17 +3,17 @@ name: Electron Build and Release
 on:
   push:
     branches:
-      - master  # Trigger on pushes to the master branch
+      - master
     tags:
-      - 'v*'   # Trigger on tags starting with 'v' (e.g., v1.0.0) - for releases
+      - 'v*'
 
 jobs:
   build-and-release:
-    runs-on: ${{ matrix.os }}  # Run on multiple operating systems
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
-        os: [windows-latest, macos-latest, ubuntu-latest] # Build for Windows, macOS, and Linux
+        os: [windows-latest, macos-latest, ubuntu-latest]
 
     steps:
       - name: Checkout Repository
@@ -34,7 +34,7 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Install Dependencies
-        run: npm install  # Use npm install or npm ci
+        run: npm ci  # Use npm ci for more reliable dependency installation
 
       - name: Build Application
         run: npm run build # This uses the 'build' script from your package.json
