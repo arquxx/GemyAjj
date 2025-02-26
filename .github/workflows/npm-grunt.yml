@@ -1,4 +1,4 @@
-name: NodeJS with Grunt
+name: Node.js CI with Grunt
 
 on:
   push:
@@ -22,21 +22,12 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v4.6.1
-      with:
-        name: build
-        path: builds/
-        if-no-files-found: warn #def warn
-        retention-days: 30
-        compression-level: 6 #def 6
-        overwrite: true
-        include-hidden-files: true
+    - name: Install Dependencies
+      run: npm install
 
-    - name: Download a Build Artifact
-      uses: actions/download-artifact@v4.1.9
+    - name: Run Grunt Build
+      run: npx grunt  # Use npx to run Grunt
 
-    - name: Build
-      run: |
-        npm install
-        grunt
+    # Example:  Add a test step (if you have tests)
+    - name: Run Tests (Example)
+      run: npm test  # Replace with your actual test command
