@@ -1,0 +1,42 @@
+name: NodeJS with Grunt
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v4.6.1
+      with:
+        name: build
+        path: builds/
+        if-no-files-found: warn #def warn
+        retention-days: 30
+        compression-level: 6 #def 6
+        overwrite: true
+        include-hidden-files: true
+
+    - name: Download a Build Artifact
+      uses: actions/download-artifact@v4.1.9
+
+    - name: Build
+      run: |
+        npm install
+        grunt
