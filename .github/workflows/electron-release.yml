@@ -1,11 +1,6 @@
 name: Electron Build and Release
 
-on:
-  push:
-    branches:
-      - master
-    tags:
-      - 'v*'
+on: [push, pull_request]
 
 jobs:
   build-and-release:
@@ -34,15 +29,5 @@ jobs:
       - name: Build Application
         run: npm run build # This uses the 'build' script from your package.json
 
-      - name: Release (Only on Tags) # Conditional release step
-        if: startsWith(github.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            build/**/*  # Upload all files from the 'build' directory
-          name: Release ${{ github.ref_name }}
-          tag_name: ${{ github.ref_name }}
-          draft: false
-          prerelease: false
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
