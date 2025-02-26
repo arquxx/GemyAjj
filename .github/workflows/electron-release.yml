@@ -33,7 +33,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
       - name: DL Artefact
-        if: always
+        if: always()
         uses: actions/upload-artifact@v4.6.1
         with:
           name: build
